@@ -7,6 +7,7 @@ const {mongoose} = require('./db/mongoose');
 const _ = require('lodash');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 // import middlewares
 const {authenticate} = require('./middleware/authenticate');
 // import controllers
