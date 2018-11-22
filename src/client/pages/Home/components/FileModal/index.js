@@ -39,7 +39,7 @@ export default class FolderModal extends React.Component {
   render() {
     const {onSave, onCancel} = this.props;
     return(
-      <Modal show={true} onHide={this.props.onCancel}>
+      <Modal show={true} onHide={onCancel}>
         <Modal.Header closeButton>
           <Modal.Title>{this.state._id ? 'Edit file' : 'Create your text file here'}</Modal.Title>
         </Modal.Header>

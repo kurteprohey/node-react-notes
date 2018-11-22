@@ -116,7 +116,7 @@ class HomeContainer extends React.Component {
         <ActionButtons buttons={this.state.actionButtons}></ActionButtons>
         <ListView items={this.props.currentFolder.children} onItemView={this.handleItemClick} onItemEdit={this.handleItemEdit}></ListView>
         {this.state.showFolderModal && <FolderModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancel={this.handlePopupClose}></FolderModal>}
-        {this.state.showFileModal && <FileModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancelr={this.handlePopupClose}></FileModal>}
+        {this.state.showFileModal && <FileModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancel={this.handlePopupClose}></FileModal>}
       </div>
     );
   }

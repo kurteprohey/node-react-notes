@@ -5,10 +5,10 @@
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "start": "export NODE_ENV=production && npm run build && node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "export NODE_ENV=development && concurrently \"npm run server\" \"npm run client\"",
     "test": "export NODE_ENV=test && mocha src/server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },

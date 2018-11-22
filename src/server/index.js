@@ -1,9 +1,5 @@
-if (process.env.NODE_ENV === 'test') {
-  process.env.MONGODB_URI = 'mongodb://localhost:27017/NotesAppTest';
-} else {
-  process.env.MONGODB_URI = 'mongodb://localhost:27017/NotesApp';
-}
-process.env.JWT_SECRET = 'ad32wd32d34r3d23d';
+// set up env variables
+require('./config/config');
 
 const express = require('express');
 const os = require('os');
@@ -35,6 +31,6 @@ app.get('/api/documents/:id', authenticate, documentController.get);
 app.post('/api/documents', authenticate, documentController.create);
 app.put('/api/documents/:id', authenticate, documentController.update);
 
-app.listen(8080, () => console.log('Listening on port 8080!'));
+app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}!`));
 
 module.exports = {app};
