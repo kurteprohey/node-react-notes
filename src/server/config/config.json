@@ -10,7 +10,6 @@
     "JWT_SECRET": "fd32d32df4o3if34oifjo34iluwjodle"
   },
   "production": {
-    "PORT": "8080",
     "MONGODB_URI": "mongodb://admin:test123@ds115094.mlab.com:15094/notes-app",
     "JWT_SECRET": "3edwedi3ddsfsdfdskfdgdfxdfsddasr"
   }
