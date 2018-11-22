@@ -32,6 +32,10 @@ app.get('/api/documents/:id', authenticate, documentController.get);
 app.post('/api/documents', authenticate, documentController.create);
 app.put('/api/documents/:id', authenticate, documentController.update);
 
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/../../dist/index.html'));
+});
+
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}!`));
 
 module.exports = {app};
