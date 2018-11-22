@@ -18,6 +18,9 @@ const DocumentSchema = new mongoose.Schema({
   content: {
     type: String
   },
+  tags: {
+    type: String
+  },
   // for root of trees
   userId: {
     type: mongoose.Schema.Types.ObjectId

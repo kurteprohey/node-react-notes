@@ -18,6 +18,7 @@ class HomeContainer extends React.Component {
     this.handleBackToFolder = this.handleBackToFolder.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleItemEdit = this.handleItemEdit.bind(this);
+    this.handlePopupClose = this.handlePopupClose.bind(this);
 
     this.state = {
       actionButtons: [
@@ -91,6 +92,9 @@ class HomeContainer extends React.Component {
     }
     this.setState({showFileModal: false, showFolderModal: false});
   }
+  handlePopupClose() {
+    this.setState({showFileModal: false, showFolderModal: false});
+  }
   goToFolder(folderId) {
     const {dispatch} = this.props;
     dispatch(getDocument(folderId));
@@ -111,8 +115,8 @@ class HomeContainer extends React.Component {
         <h3>{parentFolder ? parentFolder.name : 'Your workspace'}</h3>
         <ActionButtons buttons={this.state.actionButtons}></ActionButtons>
         <ListView items={this.props.currentFolder.children} onItemView={this.handleItemClick} onItemEdit={this.handleItemEdit}></ListView>
-        {this.state.showFolderModal && <FolderModal selectedItem={this.state.selectedItem} onSave={this.handleSave}></FolderModal>}
-        {this.state.showFileModal && <FileModal selectedItem={this.state.selectedItem} onSave={this.handleSave}></FileModal>}
+        {this.state.showFolderModal && <FolderModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancel={this.handlePopupClose}></FolderModal>}
+        {this.state.showFileModal && <FileModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancelr={this.handlePopupClose}></FileModal>}
       </div>
     );
   }

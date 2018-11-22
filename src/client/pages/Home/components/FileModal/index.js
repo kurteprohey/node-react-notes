@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Modal, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import {TYPE_FILE} from 'Constants/misc';
+import TagView from 'Components/TagView';
 
 export default class FolderModal extends React.Component {
   constructor(props) {
@@ -11,12 +12,14 @@ export default class FolderModal extends React.Component {
     let state = {
       name: '',
       content: '',
+      tags: '',
       type: TYPE_FILE
     };
     if (props.selectedItem) {
       state = Object.assign({}, state, {
         name: props.selectedItem.name,
         content: props.selectedItem.content,
+        tags: props.selectedItem.tags,
         _id: props.selectedItem._id
       });
     }
@@ -36,7 +39,7 @@ export default class FolderModal extends React.Component {
   render() {
     const {onSave, onCancel} = this.props;
     return(
-      <Modal show={true} onHide={onCancel}>
+      <Modal show={true} onHide={this.props.onCancel}>
         <Modal.Header closeButton>
           <Modal.Title>{this.state._id ? 'Edit file' : 'Create your text file here'}</Modal.Title>
         </Modal.Header>
@@ -59,6 +62,16 @@ export default class FolderModal extends React.Component {
               onChange={this.handleChange}
             />
           </FormGroup>
+          <FormGroup controlId="tags" bsSize="large">
+            <ControlLabel>Tags</ControlLabel>
+            <FormControl
+              autoFocus
+              type="text"
+              value={this.state.tags}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <TagView tags={this.state.tags} />
         </form>
         </Modal.Body>
         <Modal.Footer>

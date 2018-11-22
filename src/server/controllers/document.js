@@ -27,7 +27,7 @@ exports.get = (req, res) => {
 
 exports.create = (req, res) => {
   const userId = req.user._id;
-  let documentToInsert = _.pick(req.body, ['name', 'type', 'parentId', 'content']);
+  const documentToInsert = _.pick(req.body, ['name', 'type', 'parentId', 'content', 'tags']);
   if (!documentToInsert.parentId) {
     documentToInsert.userId = userId;
   }
@@ -42,7 +42,7 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
   const userId = req.user._id;
   const documentId = req.params.id;
-  let documentToUpdate = _.pick(req.body, ['name', 'content']);
+  const documentToUpdate = _.pick(req.body, ['name', 'content', 'tags']);
   Document
     .findOneAndUpdate({_id: documentId}, {$set: documentToUpdate}, {new: true})
     .then((document) => {
