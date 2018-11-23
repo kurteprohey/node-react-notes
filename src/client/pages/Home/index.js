@@ -1,5 +1,5 @@
 import React from 'react';
-import {createItem, updateItem, getDocument} from 'Actions/document';
+import {createItem, updateItem, getDocument, deleteItem} from 'Actions/document';
 import {BTN_TYPE_BACK, BTN_TYPE_CREATE_FILE, BTN_TYPE_CREATE_FOLDER, TYPE_FILE, TYPE_FOLDER} from 'Constants/misc';
 import {getMe} from 'Actions/account';
 import {Button, Modal} from "react-bootstrap";
@@ -18,6 +18,7 @@ class HomeContainer extends React.Component {
     this.handleBackToFolder = this.handleBackToFolder.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleItemEdit = this.handleItemEdit.bind(this);
+    this.handleItemRemove = this.handleItemRemove.bind(this);
     this.handlePopupClose = this.handlePopupClose.bind(this);
 
     this.state = {
@@ -80,6 +81,10 @@ class HomeContainer extends React.Component {
       });
     }
   }
+  handleItemRemove(item)   {
+    const {dispatch} = this.props;
+    dispatch(deleteItem(item._id));
+  }
   handleSave(data) {
     const {dispatch, currentFolder, user} = this.props;
     let payload = data;
@@ -114,7 +119,7 @@ class HomeContainer extends React.Component {
       <div className="Home">
         <h3>{parentFolder ? parentFolder.name : 'Your workspace'}</h3>
         <ActionButtons buttons={this.state.actionButtons}></ActionButtons>
-        <ListView items={this.props.currentFolder.children} onItemView={this.handleItemClick} onItemEdit={this.handleItemEdit}></ListView>
+        <ListView items={this.props.currentFolder.children} onItemView={this.handleItemClick} onItemEdit={this.handleItemEdit} onItemRemove={this.handleItemRemove}></ListView>
         {this.state.showFolderModal && <FolderModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancel={this.handlePopupClose}></FolderModal>}
         {this.state.showFileModal && <FileModal selectedItem={this.state.selectedItem} onSave={this.handleSave} onCancel={this.handlePopupClose}></FileModal>}
       </div>

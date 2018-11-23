@@ -4,6 +4,7 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const {Document} = require('./document');
+const {ObjectId} = require('mongodb');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -102,12 +103,16 @@ UserSchema.statics.hasAccessToDocument = function(userId, documentId) {
           connectToField: "_id",
           as: "parents"
         }
+      },
+      {
+        $match: { _id: new ObjectId(documentId) }
       }
     ]).then((docs) => {
-      const currectDoc = docs.filter(doc => doc._id == documentId)[0];
+      const currectDoc = docs[0]; //.filter(doc => doc._id == documentId)[0];
       if (!currectDoc) {
         return reject();
       }
+      console.log('found doc while checking rights', currectDoc);
       let treeRootUserId;
       if (!currectDoc.userId) {
         // find parent with userId field to check rights

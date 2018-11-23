@@ -47,6 +47,28 @@ export const updateItem = (document) => (dispatch) => {
   });
 };
 
+export const deleteItem = (documentId) => (dispatch) => {
+  dispatch({type: constants.LOADING});
+  return http(`${API_URL}/documents/${documentId}`, {
+    method: 'DELETE',
+    mode: 'cors',
+    body: JSON.stringify(document),
+    headers: {'Content-Type': 'application/json'}
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json();
+    }
+    throw new Error('Network response was not ok.');
+  })
+  .then(data => {
+    dispatch({type: constants.DELETE_ITEM_SUCCESS, payload: data});
+  })
+  .catch(err => {
+    dispatch({type: constants.DELETE_ITEM_FAILURE});
+  });
+};
+
 export const getDocument = (documentId) => (dispatch) => {
   dispatch({type: constants.LOADING});
   let getUrl = documentId ? `${API_URL}/documents/${documentId}` : `${API_URL}/users/workspace`;

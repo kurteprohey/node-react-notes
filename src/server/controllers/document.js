@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const {ObjectId} = require('mongodb');
 const {mongoose} = require('../db/mongoose');
 const {Document} = require('../models/document');
 const {User} = require('../models/user');
@@ -6,6 +7,7 @@ const {User} = require('../models/user');
 exports.get = (req, res) => {
   const documentId = req.params.id;
   const userId = req.user._id;
+  console.log('getting the doc');
   User.hasAccessToDocument(userId, documentId)
     .then(() => {
       Document
@@ -24,6 +26,32 @@ exports.get = (req, res) => {
     })
   .catch((err) => res.status(404).send());
 };
+
+exports.delete = (req, res) => {
+  const documentId = req.params.id;
+  Document.aggregate([
+    {
+      $graphLookup: {
+        from: "documents",
+        startWith: "$_id",
+        connectFromField: "_id",
+        connectToField: "parentId",
+        as: "children"
+      }
+    },
+    {
+      $match: { _id: new ObjectId(documentId) }
+    }
+  ]).then((docs) => {
+    const doc = docs[0];
+    const childrenIds = doc.children.map(child => child._id);
+    const ids = [doc._id].concat(childrenIds);
+    Document.deleteMany({'_id':{'$in':ids}})
+      .then((removed) => {
+        res.send({rootId: doc._id});
+      });
+  });
+}
 
 exports.create = (req, res) => {
   const userId = req.user._id;

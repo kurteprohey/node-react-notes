@@ -31,6 +31,7 @@ app.get('/api/users/workspace', authenticate, userController.getWorkspace);
 app.get('/api/documents/:id', authenticate, documentController.get);
 app.post('/api/documents', authenticate, documentController.create);
 app.put('/api/documents/:id', authenticate, documentController.update);
+app.delete('/api/documents/:id', authenticate, documentController.delete);
 
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname+'/../../dist/index.html'));
