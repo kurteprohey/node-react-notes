@@ -2,7 +2,7 @@ import React from 'react';
 import FolderImg from './ios-folder-icon.jpg';
 import {Button} from "react-bootstrap";
 
-export default function ListView({item, onItemView, onItemEdit, onItemRemove}) {
+const ListView = React.memo(function({item, onItemView, onItemEdit, onItemRemove}) {
   return (
     <li className="list-item" key={item._id} >
       <img onClick={onItemView.bind(null, item)} src={FolderImg} width="45" height="45" />
@@ -13,4 +13,6 @@ export default function ListView({item, onItemView, onItemEdit, onItemRemove}) {
       <Button onClick={onItemRemove.bind(null, item)} bsStyle="danger"><i className="glyphicon glyphicon-remove"></i></Button>
     </li>
   );
-}
+});
+
+export default ListView;

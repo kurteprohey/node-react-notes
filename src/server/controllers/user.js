@@ -36,7 +36,7 @@ exports.login = (req, res) => {
 exports.deleteToken = (req, res) => {
   req.user.removeToken(req.token)
     .then(() => {
-      res.status(200).send();
+      res.status(200).send({});
     })
     .catch(() => {
       res.status(400).send();

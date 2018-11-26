@@ -21,6 +21,9 @@ export default function account(state = initialState, action) {
       return Object.assign({}, state, {user: payload});
     case constants.REGISTER_USER_SUCCESS:
       return Object.assign({}, state, {user: payload});
+    case constants.LOGOUT_USER_SUCCESS:
+    debugger;
+      return Object.assign({}, state, {token: null, user: false});
     default:
       return state;
   }

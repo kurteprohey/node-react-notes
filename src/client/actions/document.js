@@ -69,7 +69,7 @@ export const deleteItem = (documentId) => (dispatch) => {
   });
 };
 
-export const getDocument = (documentId) => (dispatch) => {
+export const getItem = (documentId) => (dispatch) => {
   dispatch({type: constants.LOADING});
   let getUrl = documentId ? `${API_URL}/documents/${documentId}` : `${API_URL}/users/workspace`;
   return http(getUrl, {

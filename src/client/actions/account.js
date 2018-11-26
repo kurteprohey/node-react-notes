@@ -80,3 +80,27 @@ export const getMe = () => (dispatch) => {
     });
   return promise;
 }
+
+export const logout = () => (dispatch) => {
+  dispatch({type: constants.LOADING});
+  const promise = http(`${API_URL}/users/me/token`, {
+    method: 'DELETE',
+    mode: 'cors'
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json();
+    }
+    throw new Error('Network response was not ok.');
+  });
+
+  promise
+    .then(user => {
+      localStorage.removeItem('X-AUTH-TOKEN');
+      dispatch({type: constants.LOGOUT_USER_SUCCESS});
+    })
+    .catch((err) => {
+      dispatch({type: constants.LOGOUT_USER_FAILURE});
+    });
+  return promise;
+};

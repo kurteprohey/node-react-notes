@@ -5,7 +5,7 @@ import {TYPE_FILE, TYPE_FOLDER} from 'Constants/misc';
 import FileView from './components/FileView';
 import FolderView from './components/FolderView';
 
-export default function ListView({items, onItemView, onItemEdit, onItemRemove}) {
+const ListView = React.memo(function({items, onItemView, onItemEdit, onItemRemove}) {
   const itemsTemplate = items.map((item, index) =>
     <React.Fragment key={index}>
       {item.type === TYPE_FILE && <FileView item={item} onItemEdit={onItemEdit} onItemRemove={onItemRemove} />}
@@ -15,4 +15,6 @@ export default function ListView({items, onItemView, onItemEdit, onItemRemove}) 
   return (
     <ul className="list-view">{itemsTemplate}</ul>
   );
-}
+});
+
+export default ListView;

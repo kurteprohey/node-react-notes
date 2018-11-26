@@ -7,7 +7,6 @@ const {User} = require('../models/user');
 exports.get = (req, res) => {
   const documentId = req.params.id;
   const userId = req.user._id;
-  console.log('getting the doc');
   User.hasAccessToDocument(userId, documentId)
     .then(() => {
       Document
